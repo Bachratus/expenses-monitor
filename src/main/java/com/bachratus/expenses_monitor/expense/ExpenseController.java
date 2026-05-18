@@ -2,7 +2,6 @@ package com.bachratus.expenses_monitor.expense;
 
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +24,10 @@ public class ExpenseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Expense createExpense(@RequestBody CreateExpenseRequest request) {
-        if (request == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is required");
-        }
+    public Expense createExpense(
+            @RequestBody CreateExpenseRequest request
+    ) {
+        if (request == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is required");
 
         return expenseService.createExpense(request.amount(), request.categoryId(), request.date());
     }
@@ -41,7 +40,8 @@ public class ExpenseController {
     @GetMapping("/range")
     public List<Expense> getExpensesByDateRange(
             @RequestParam LocalDate from,
-            @RequestParam LocalDate to) {
+            @RequestParam LocalDate to
+    ) {
         return expenseService.getExpensesByDateRange(from, to);
     }
 }
