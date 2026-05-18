@@ -23,9 +23,7 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Category createCategory(@RequestBody CreateCategoryRequest request) {
-        if (request == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is required");
-        }
+        if (request == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body is required");
 
         return categoryService.createCategory(request.name());
     }

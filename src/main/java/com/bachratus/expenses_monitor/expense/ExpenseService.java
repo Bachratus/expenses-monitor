@@ -21,15 +21,10 @@ public class ExpenseService {
     }
 
     public Expense createExpense(BigDecimal amount, Long categoryId, LocalDate date) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Amount must be greater than zero");
-        }
-        if (categoryId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category id is required");
-        }
-        if (date == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date is required");
-        }
+        if (categoryId == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category id is required");
+        if (date == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date is required");
 
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
@@ -43,12 +38,10 @@ public class ExpenseService {
     }
 
     public List<Expense> getExpensesByDateRange(LocalDate from, LocalDate to) {
-        if (from == null || to == null) {
+        if (from == null || to == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Both from and to dates are required");
-        }
-        if (from.isAfter(to)) {
+        if (from.isAfter(to))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "From date cannot be after to date");
-        }
 
         return expenseRepository.findByDateBetweenOrderByDateAsc(from, to);
     }
