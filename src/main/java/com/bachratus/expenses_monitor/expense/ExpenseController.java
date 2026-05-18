@@ -40,8 +40,8 @@ public class ExpenseController {
 
     @GetMapping("/range")
     public List<Expense> getExpensesByDateRange(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
+            @RequestParam LocalDate from,
+            @RequestParam LocalDate to) {
         return expenseService.getExpensesByDateRange(from, to);
     }
 }
